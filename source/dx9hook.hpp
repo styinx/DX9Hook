@@ -3,12 +3,12 @@
 
 #include "MinHook.h"
 #include "imgui.h"
-#include "imgui_impl_dx9.h"
-#include "imgui_impl_win32.h"
+#include "backends/imgui_impl_dx9.h"
+#include "backends/imgui_impl_win32.h"
 
 #include <d3d9.h>
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <windows.h>
 
 /**
@@ -32,6 +32,7 @@ void shutdownMinHook();
 struct DXHook
 {
     bool    ready         = false;
+    bool    draw          = true;
     HMODULE target_module = nullptr;
     HWND    target_window = nullptr;
 
@@ -41,6 +42,6 @@ struct DXHook
 };
 
 extern DXHook      hook;
-static const char* app_title = "Demo";
+extern const char* app_title;
 
 #endif  // D3D9_HOOK_H_INCLUDED_

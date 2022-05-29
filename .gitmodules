@@ -1,0 +1,9 @@
+[submodule "DLLInject"]
+	path = DLLInject
+	url = https://github.com/styinx/DLLInject
+[submodule "minhook"]
+	path = minhook
+	url = https://github.com/TsudaKageyu/minhook
+[submodule "imgui"]
+	path = imgui
+	url = https://github.com/ocornut/imgui

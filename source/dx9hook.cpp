@@ -8,25 +8,27 @@ HRESULT __stdcall EndSceneHook(IDirect3DDevice9* device)
 {
     if(!hook.ready)
     {
-        std::cout << "Init ImGui" << std::endl;
-
         ImGui::CreateContext();
         ImGui_ImplWin32_Init(hook.target_window);
         ImGui_ImplDX9_Init(device);
 
         hook.ready = true;
     }
-    ImGui_ImplDX9_NewFrame();
-    ImGui_ImplWin32_NewFrame();
-    ImGui::NewFrame();
+    if(hook.draw)
+    {
+        ImGui_ImplDX9_NewFrame();
+        ImGui_ImplWin32_NewFrame();
+        ImGui::NewFrame();
 
-    bool bShow = true;
-    ImGui::ShowDemoWindow(&bShow);
+        ImGui::Begin("Demo window");
+        ImGui::Button("Hello!");
+        ImGui::End();
 
-    ImGui::EndFrame();
-    ImGui::Render();
+        ImGui::EndFrame();
+        ImGui::Render();
 
-    ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
+        ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
+    }
 
     return originalEndScene(device);
 }

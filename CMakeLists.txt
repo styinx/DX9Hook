@@ -32,9 +32,8 @@ link_directories(
 include_directories(
         source/
         imgui/
-        imgui/backends/
         minhook/include/
-        DLLInject/source/
+        DLLInject/include/
 )
 
 # Add Minhook
@@ -45,15 +44,16 @@ set_target_properties(minhook PROPERTIES RELWITHDEBINFO_POSTFIX "")
 set_target_properties(minhook PROPERTIES MINSIZEREL_POSTFIX "")
 set_target_properties(minhook PROPERTIES PREFIX "lib")
 
-# Add DLLInject
-add_subdirectory(DLLInject)
-
 # Add Demo
 add_executable(demo demo/demo.cpp demo/DX9.cpp)
 target_link_libraries(demo d3d9)
 
-add_executable(inject demo/inject.cpp)
-target_link_libraries(inject DLLInject)
+add_executable(inject demo/inject.cpp DLLInject/source/DLLInject.cpp)
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    set_target_properties(inject PROPERTIES LINK_FLAGS /SUBSYSTEM:WINDOWS)
+    set_target_properties(inject PROPERTIES MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+endif ()
+target_link_libraries(inject)
 
 # Add DLL
 add_library(hook SHARED
