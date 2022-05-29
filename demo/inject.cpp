@@ -6,3 +6,8 @@ int main(int argc, char** argv)
     injector.run();
     return 0;
 }
+
+int WINAPI WinMain(HINSTANCE instance, HINSTANCE prev_instance, LPSTR cmd_line, int shown)
+{
+    return main(__argc, __argv);
+}
